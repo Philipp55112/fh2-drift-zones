@@ -14,8 +14,6 @@
 **Add 10 custom, point-based Drift Zones to the open world of Forza Horizon 2 on PC. Inspired by the Drift Zones introduced in Forza Horizon 3.**
 
 [![Release](https://img.shields.io/github/v/release/Philipp55112/fh2-drift-zones?include_prereleases&label=release)](https://github.com/Philipp55112/fh2-drift-zones/releases/tag/v0.9-beta)
-[![Downloads](https://img.shields.io/github/downloads/Philipp55112/fh2-drift-zones/total)](https://github.com/Philipp55112/fh2-drift-zones/releases)
-[![Game](https://img.shields.io/badge/game-Forza%20Horizon%202-blue)](https://github.com/Philipp55112/fh2-drift-zones)
 [![Status](https://img.shields.io/badge/status-Beta-orange)](https://github.com/Philipp55112/fh2-drift-zones/releases/tag/v0.9-beta)
 
 Drift Zones introduces a completely new type of driving challenge to Forza Horizon 2.
