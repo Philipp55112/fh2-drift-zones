@@ -1,4 +1,3 @@
-
 # Forza Horizon 2 – Drift Zones
 
 <div align="center">
@@ -6,21 +5,21 @@
 
   <p><strong>Custom Drift Zones for Forza Horizon 2 on PC</strong></p>
 
-  <a href="https://github.com/Philipp55112/fh2-drift-zones/releases/tag/v0.9-beta">
-    <img src="https://img.shields.io/badge/Download-v0.9%20Beta-ff2b8a" alt="Download v0.9 Beta">
+  <a href="https://github.com/Philipp55112/fh2-drift-zones/releases">
+    <img src="https://img.shields.io/badge/Download-v1.0-ff2b8a" alt="Download v1.0">
   </a>
+  <img src="https://img.shields.io/badge/Status-Stable-success" alt="Stable Release">
 </div>
 
-**Add 10 custom, point-based Drift Zones to the open world of Forza Horizon 2 on PC. Inspired by the Drift Zones introduced in Forza Horizon 3.**
+**Bring the Drift Zone experience to Forza Horizon 2!**
 
-[![Release](https://img.shields.io/github/v/release/Philipp55112/fh2-drift-zones?include_prereleases&label=release)](https://github.com/Philipp55112/fh2-drift-zones/releases/tag/v0.9-beta)
-[![Status](https://img.shields.io/badge/status-Beta-orange)](https://github.com/Philipp55112/fh2-drift-zones/releases/tag/v0.9-beta)
+Drift Zones introduces ten custom, point-based drifting challenges to the open world of Forza Horizon 2 on PC, inspired by the Drift Zones first introduced in Forza Horizon 3.
 
-Drift Zones introduces a completely new type of driving challenge to Forza Horizon 2.
+Drive through carefully recorded routes, earn Drift Skill Points, compete against your personal bests and follow custom Festival flags along the roads.
 
-Instead of measuring speed, each zone evaluates your drifting performance and awards points for the Drift Skills you earn while driving through the route.
+Every zone has its own map icon, start and finish gates, individual scoring and dedicated route.
 
-The first beta release adds **10 custom Drift Zones** across France and Italy. Every route has been driven and recorded directly in-game.
+All ten zones are distributed across France and Italy and have been individually driven and recorded in-game.
 
 ---
 
@@ -28,81 +27,153 @@ The first beta release adds **10 custom Drift Zones** across France and Italy. E
 
 | Feature | Description |
 |---|---|
-| **10 Custom Drift Zones** | Adds 10 hand-recorded routes across France and Italy. |
-| **Live Drift Scoring** | Counts Drift Skill Points while you are inside a zone. |
-| **Point-Based Results** | Displays your final drift score when you reach the finish. |
+| **10 Custom Drift Zones** | Ten individually recorded routes across France and Italy. |
+| **Live Drift Scoring** | Tracks Drift Skill Points while driving through a zone. |
+| **Point-Based Results** | Displays your final drift score when reaching the finish. |
 | **Personal Best Tracking** | Saves an individual best score for every zone. |
-| **Map Personal Best** | Displays your PB directly on the world map and results screen. |
-| **Custom Map Icon** | Adds a dedicated icon for Drift Zones. |
-| **Dedicated Map Filter** | Provides a separate Drift Zones category in the map filter. |
-| **Available from the Start** | All 10 zones are visible on the map from the beginning. |
-| **Fast Travel & Routing** | Supports Fast Travel and Route Setting just like regular Speed Zones. |
-| **Start & Finish Gates** | Custom gates placed across the road, with a width of 24 metres. |
-| **Localization** | Includes 14 language variants. |
-| **Runtime Loading** | Loads through FH2 Extra Options without modifying original game files. |
+| **Map Personal Best** | Displays your personal best directly on the world map. |
+| **Custom Map Icon** | Dedicated Drift Zone icon. |
+| **Dedicated Map Filter** | Separate Drift Zones category in the map filter. |
+| **Fast Travel & Routing** | Works just like regular Speed Zones. |
+| **Start & Finish Gates** | Custom gates define the beginning and end of every route. |
+| **Festival Flags** | 281 dynamically loaded flags mark the routes throughout the world. |
+| **Dynamic Flag Loading** | Flags appear and disappear depending on your distance from them. |
+| **Regional Flag Colors** | Orange flags in France and blue flags in Italy. |
+| **14 Languages** | Localized zone names and associated text. |
+| **Correct Statistics** | Drift Zones are counted separately from Speed Zones. |
+| **Runtime Loading** | All components load through FH2 Extra Options without modifying original game files. |
 
 ---
 
 ## Drift Zones
 
-The v0.9 Beta release includes the following routes:
+Version 1.0 includes ten custom routes across France and Italy.
 
 | # | Drift Zone |
 |---|---|
-| 01 | Castelletto Drift Zone |
-| 02 | Festival Circuit Drift Zone |
-| 03 | Forest Switchbacks Drift Zone |
-| 04 | Southern Coast Drift Zone |
-| 05 | Forest Pass Drift Zone |
-| 06 | Highland Trail Drift Zone |
-| 07 | San Giovanni Loop Drift Zone |
-| 08 | Montellino Switchbacks Drift Zone |
-| 09 | Country Road Drift Zone |
-| 10 | City Outskirts Curve Drift Zone |
+| 01 | Castelletto |
+| 02 | Festival Loop |
+| 03 | Forest Hairpins |
+| 04 | South Coast |
+| 05 | Forest Pass |
+| 06 | Highland Trail |
+| 07 | San Giovanni Loop |
+| 08 | Montellino Hairpins (Gravel) |
+| 09 | Field Track |
+| 10 | Outskirts Bend |
 
-All routes are distributed across France and Italy and have been recorded directly in-game.
+Every route has been individually driven and recorded in-game to follow the actual roads rather than relying on automatically generated paths.
+
+All ten Drift Zones are visible on the world map from the beginning.
 
 ---
 
-## Scoring System
+## Drift Scoring System
 
-Drift Zones use drifting performance rather than average speed as their scoring basis.
+Drift Zones evaluate your drifting performance instead of your average speed.
 
 ### How it works
 
 1. Enter a Drift Zone through its start gate.
-2. Drift through the marked route.
-3. Drift Skill Points are counted live while you are inside the zone.
-4. Cross the finish gate to complete the run.
-5. Your final result is displayed as a point total.
-
-The results presentation follows the familiar Speed Zone concept, adapted for drift scoring.
+2. Start drifting along the marked route.
+3. Your Drift Skill Points are tracked live.
+4. Reach the finish gate to complete your run.
+5. Your final result is displayed in the familiar Speed Zone-style results presentation.
 
 ### Personal Best System
 
-Each Drift Zone maintains its own Personal Best.
+Every Drift Zone maintains its own Personal Best.
 
-- Individual PB tracking for every zone.
-- Best score displayed directly on the world map.
-- PB also displayed on the results screen.
-- Automatically updated when a new personal record is achieved.
+- Individual best score for each zone.
+- Personal Best displayed directly on the world map.
+- Personal Best shown on the results screen.
+- Automatically updated whenever you achieve a new record.
+
+### Run Cancellation Rules
+
+To ensure that runs are completed properly, Drift Zones include dedicated cancellation rules.
+
+A run is cancelled if:
+
+- **Standing still:** You remain stationary for more than 2 seconds.
+- **Wrong direction:** You travel more than 30 metres in the opposite direction.
+- **Leaving the road:** You remain off the road for more than 3 seconds.
+
+**Rewinding is allowed.** You can use the game's rewind function without automatically cancelling your current Drift Zone run.
+
+---
+
+## Festival Flags
+
+Drift Zones feature custom Horizon Festival flags placed throughout all ten routes.
+
+A total of **281 flags** mark the roads, creating a visual guide that makes every Drift Zone feel like a dedicated Festival challenge.
+
+### Flag Placement
+
+- Flags are placed at the start and finish gates.
+- Additional flags are positioned approximately every 30 metres along the route.
+- Placement alternates between the left and right sides of the road.
+- Flags are oriented at a 90-degree angle to the road.
+- Individual placement corrections account for walls, buildings, guardrails and other obstacles.
+
+### Dynamic Flag System
+
+The flags are dynamically loaded during gameplay rather than being permanently active throughout the world.
+
+- Flags begin appearing at approximately 320 metres.
+- They fade in smoothly as you approach.
+- They can be driven around and physically destroyed.
+- Destroyed flags return automatically.
+- Flags are unloaded again when they are no longer needed.
+
+This keeps the world clean while ensuring that the routes are clearly marked when approaching a Drift Zone.
+
+### Regional Colors
+
+The flag colors reflect the region in which the Drift Zone is located.
+
+| Region | Flag Color |
+|---|---|
+| France | Orange |
+| Italy | Blue |
+
+### Event Compatibility
+
+Drift Zone scoring and Festival flags are automatically suspended during events.
+
+When returning to Freeroam, both systems become available again.
 
 ---
 
 ## World Map Integration
 
-Drift Zones are integrated into the existing Forza Horizon 2 world map.
+Drift Zones are fully integrated into the existing Forza Horizon 2 world map.
 
 | Feature | Implementation |
 |---|---|
 | Custom Icon | Dedicated Drift Zone map icon. |
 | Map Filter | Separate Drift Zones category. |
-| Zone Visibility | All zones visible from the beginning. |
+| Zone Visibility | All ten zones visible from the beginning. |
 | Fast Travel | Supported. |
 | Route Setting | Supported. |
 | Personal Best | Displayed directly on the map. |
+| Localization | 14 language variants. |
 
-The goal is to make Drift Zones feel like a natural part of the original Forza Horizon 2 world.
+The goal is to make Drift Zones feel like a natural part of the original Forza Horizon 2 experience.
+
+---
+
+## Statistics & Progression
+
+Version 1.0 introduces corrected Drift Zone statistics and progression handling.
+
+- Drift Zones are no longer counted as regular Speed Zones.
+- The **Drift Zones Triggered** statistic now counts correctly.
+- Existing save games are supported.
+- Previously accumulated game progress is preserved.
+
+No new save game is required.
 
 ---
 
@@ -144,44 +215,56 @@ All Drift Zone names and associated text are localized.
 - Compatible Azimuth installation.
 - FH2 Extra Options with its runtime mod loader enabled.
 
-This mod is designed specifically for the PC version of Forza Horizon 2 running through Azimuth.
+This modification is specifically designed for the PC version of Forza Horizon 2 running through Azimuth.
 
 ---
 
 ## Installation
 
-The Releases section contains the ready-to-use, prebuilt beta package.
-
 ### Installation Steps
 
 1. Open the [Drift Zones Releases page](https://github.com/Philipp55112/fh2-drift-zones/releases).
-2. Download `Driftzonen_v0.9_Beta.zip` from the Assets section.
-3. Extract the ZIP archive.
-4. Place the extracted mod files in the location used by your FH2 Extra Options mod-loader setup.
-5. Keep the original directory structure from the archive intact.
+2. Download the latest **Drift Zones v1.0** release package.
+3. Extract the downloaded archive.
+4. Place the mod folder in the location used by your FH2 Extra Options mod-loader setup.
+5. Keep the original directory structure intact.
 6. Start Forza Horizon 2 through Azimuth with FH2 Extra Options and its runtime mod loader enabled.
-7. Open the world map and look for the Drift Zones category.
+7. Open the world map and look for the **Drift Zones** category.
 
-**Important:** The exact target folder depends on your FH2 Extra Options setup. Follow the same installation convention as your other runtime mods. Do not move individual files out of the package or rename the mod components.
+**Important:** The exact target folder depends on your FH2 Extra Options configuration. Follow the same installation convention as your other runtime mods.
+
+Do not move individual files out of the package or rename the mod components.
 
 ---
 
 ## Uninstallation
 
-To remove Drift Zones:
+Removing Drift Zones is straightforward.
 
 1. Close Forza Horizon 2.
-2. Remove the files installed from the Drift Zones package from your mod-loader location.
-3. Do not delete FH2 Extra Options itself or shared files used by other mods.
-4. Restart the game.
+2. Delete the installed Drift Zones mod folder.
+3. Restart the game.
 
-The original game files remain untouched.
+No original game files need to be restored or replaced.
+
+**Your original Forza Horizon 2 installation remains untouched.**
 
 ---
 
 ## Technical Implementation
 
-Drift Zones integrates into Forza Horizon 2 using custom game data and runtime components loaded by FH2 Extra Options.
+Drift Zones integrates into Forza Horizon 2 using custom game data and four dedicated runtime plugins.
+
+### Runtime Plugins
+
+The mod consists of four separate plugins:
+
+| Plugin | Responsibility |
+|---|---|
+| **Drift Scoring** | Drift point calculation, live scoring, results presentation and Personal Best handling. |
+| **User Interface** | World map integration, dedicated map filter category and zone visibility. |
+| **Statistics** | Correct Drift Zone progression and statistic tracking. |
+| **Drift Zones Logic** | Run cancellation rules, dynamic Festival flag loading, placement and event compatibility. |
 
 ### Custom Game Data
 
@@ -193,55 +276,31 @@ Drift Zones integrates into Forza Horizon 2 using custom game data and runtime c
 | Map Icons | Custom Drift Zone map icon. |
 | `strings.json` | Localized names and text resources. |
 
-### Runtime Components
-
-| Component | Responsibility |
-|---|---|
-| `Driftzonen.dll` | Drift scoring, results banner and Personal Best display on the map. |
-| `DriftzonenUI.dll` | Dedicated map-filter category and initial visibility of Drift Zones. |
-
 ### Runtime Loading
 
-All components are loaded at runtime through the FH2 Extra Options mod loader.
+All components are loaded at runtime through FH2 Extra Options.
 
-**No original Forza Horizon 2 game files are modified.**
+- No original game files are modified.
+- No permanent game installation changes are required.
+- All custom functionality is handled through runtime plugins.
+- Removing the mod folder is sufficient to uninstall the modification.
 
----
+### Logging
 
-## Known Issues & Limitations
+The release uses minimal logging to keep unnecessary log output to a minimum.
 
-The v0.9 Beta release has a few known limitations:
+The main logic plugin generates a small `DriftZonesLogic.log` file:
 
-| Issue | Status |
-|---|---|
-| Loading screen event counter may include Drift Zones in Speed Zone totals. | Under investigation |
-| Some progression counters may count Drift Zones as regular Speed Zones. | Under investigation |
-| Traffic and AI vehicles are not yet hidden inside Drift Zones. | Planned |
-| Custom props and flags at start and finish gates are not included yet. | Planned |
+- Recreated on every game start.
+- Limited to a maximum of 200 lines.
 
-The progression-counter behaviour is being investigated. The remaining items are planned improvements for future releases.
-
----
-
-## Roadmap
-
-The following improvements are planned for future versions:
-
-| Feature | Description |
-|---|---|
-| AI & Traffic | Hide traffic and AI vehicles while driving inside a Drift Zone. |
-| Custom Props | Add props and flags at the start and finish of each route. |
-| More Drift Zones | Expand the selection of available Drift Zones. |
-| Progression Fixes | Correct loading-screen and progression counters. |
-| General Improvements | Refine scoring, presentation and overall behaviour. |
-
-Further improvements will be based on feedback from beta testers and the community.
+The scoring plugin maintains its own small log file.
 
 ---
 
 ## Feedback & Bug Reports
 
-This is an early beta release. Feedback from players and beta testers is highly appreciated.
+Feedback, suggestions and bug reports are always welcome.
 
 When reporting an issue, please include:
 
@@ -265,12 +324,12 @@ When reporting an issue, please include:
 
 | Contributor | Contribution |
 |---|---|
-| **Philipp55112** | Project concept, implementation, integration and release. |
+| **Philipp55112** | Project concept, development, implementation, integration and release. |
 | **Azimuth** | PC runtime used to run Forza Horizon 2. |
 | **FH2 Extra Options** | Runtime mod-loading support. |
 | **Alpha Testers & Community** | Testing, feedback and suggestions. |
 
-Special thanks to everyone who helped test the mod and provided feedback during development.
+Special thanks to everyone who helped test Drift Zones during development and contributed valuable feedback to make Version 1.0 possible.
 
 ---
 
@@ -292,11 +351,11 @@ Use this modification at your own risk.
 
 No permission is granted to redistribute, modify, repackage or publish this mod or its included files without prior permission from the author.
 
-The v0.9 Beta release is distributed as a prebuilt package. Source code is not included.
+The release is distributed as a prebuilt package. Source code is not included.
 
 ---
 
-## Related Project
+## Related Projects
 
 ### Forza 21:9 Ultrawide Patch
 
@@ -305,5 +364,3 @@ A separate project by the same author, bringing true ultrawide UI support to For
 [Visit the Forza 21:9 Ultrawide Patch Repository](https://github.com/Philipp55112/fh2-ultrawide-ui)
 
 ---
-
-**Drift Zones – Bringing a new way to drift to Forza Horizon 2.**
