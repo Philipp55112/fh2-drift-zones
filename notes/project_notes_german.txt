@@ -1,0 +1,501 @@
+DRIFTZONEN – STAND UND OFFENE PUNKTE
+=====================================
+Stand: 05.11.2026, nach Release 0.9.9 Beta
+Diese Datei bei jeder neuen Sitzung mitgeben ("hier ist unser Stand").
+
+-------------------------------------------------
+1. AKTUELLER STAND (0.9.9 Beta, auf dem Desktop als Driftzonen_v0.9.9-beta.zip)
+-------------------------------------------------
+Spielordner:   D:\Program Files\Azimuth All in One
+Mod-Ordner:    mods\Driftzonen   (Extra Options 0.4.4, keine Spieldateien geaendert)
+
+Plugins im Release (genau diese fuenf):
+  Driftzonen.dll          Punkte-Wertung, Ergebnis-Banner, PB auf der Karte
+  DriftzonenUI.dll        Kartenfilter "Drift Zones", Zonen von Anfang an sichtbar
+  DriftzonenStats.dll     Statistik "Drift Zones Triggered", Save-Migration
+  DriftzonenRegeln.dll    Abbruchregeln (v1.6, intern als DriftzonenRegeln_v7.dll gebaut)
+  DriftzonenFlaggen.dll   Flaggen an Toren und entlang der Zonen (Plugin v25, 300 Flaggen)
+
+Tore: media\tracks\anthem\ribbon_00\GameObjs.xml = GameObjs_Zone8_v5.xml
+      (md5 3b53a37c47e809265bd1b2351021d735)
+
+Abbruchregeln: >2 s Stillstand, >30 m falsche Richtung, >3 s neben der Strasse
+(>35 m von der Linie oder Rad auf Gras). Zurückspulen erlaubt.
+
+Flaggen-Logik: spawnen ab 190 m, ausblenden ab 260 m, nach 5 s wieder bereit,
+umfahrbar, stehen beim Wiederkommen wieder. Modell = FH2 Festival-Flagge (Def 121-124).
+
+Zonen:
+   1 Castelletto            6 Highland Trail
+   2 Festival Loop          7 San Giovanni Loop
+   3 Forest Hairpins        8 Montellino Hairpins (Schotter)
+   4 South Coast            9 Field Track
+   5 Forest Pass           10 Outskirts Bend
+
+-------------------------------------------------
+2. OFFEN FUER 1.0
+-------------------------------------------------
+[ ] Flaggen Zone 1 (Castelletto) erscheinen nicht
+[ ] Zone 4 (Suedkueste): Render-Knoten teils ungueltig ("Knoten ok 0/29"), Flaggen fehlen
+[ ] Einzelne Flaggen fehlen / schweben / blinken
+[ ] Flaggen stecken teils in Objekten, Gelaende oder zerstoerbaren Props
+      -> Plan: Hindernisliste von Chattie, Flagge an Kollision WEGLASSEN (Option 1)
+[ ] Abstaende ungleichmaessig (z. B. 5 m nach dem Start, dann 30 m)
+      -> Plan: Zonenlaenge L messen, Abschnitte n = runden(L / 30),
+         Abstand d = L / n (liegt dann immer bei ca. 30 m), Flaggen bei d, 2d, ...
+         bis vor dem Ziel = n - 1 Flaggen, abwechselnd links/rechts.
+         Tore behalten ihre eigenen Flaggen. Faellt eine Flagge wegen Hindernis
+         weg, bleibt die Luecke (die anderen werden NICHT verschoben).
+      Vorlaeufige Laengen (aus der Abbruch-Linie, wird mit Chatties Daten genau):
+         Zone  Laenge   Abschnitte  Abstand  Flaggen zwischen den Toren
+          1     278 m       9       30,9 m        8
+          2    1228 m      41       29,9 m       40
+          3     771 m      26       29,6 m       25
+          4     788 m      26       30,3 m       25
+          5     583 m      19       30,7 m       18
+          6     508 m      17       29,9 m       16
+          7     613 m      20       30,7 m       19
+          8     462 m      15       30,8 m       14
+          9     638 m      21       30,4 m       20
+         10    1544 m      51       30,3 m       50
+[ ] Streckenmasse / Hindernisse: Codex-Ergebnis Auftrag 1 (D:\FH2_Flaggen\out\v2\, Kopie auf
+    Desktop FH2_Driftzonen_Review_Paket) = REVIEW-Paket, noch nicht platzierungsfertig
+      Gut: 7336 von 7478 1-m-Stationen direkt aus Strassenmeshes (Mitte, Raender, Breite,
+           Untergrund, Quelle). Zone 2,4,6,8,10 komplett (Zone 4/10 ein paar Kantenspruenge).
+      Luecken: 142 Stationen ungeloest (Zone 3: 101, Zone 5: 20, Zone 7: 16, Zone 9: 4, Zone 1: 1),
+           71 Breiten ausserhalb 5-20 m (Zone 3: 65), 40 Kantensprunge >2 m/m
+           (Zone 1: 12, Zone 3: 10, Zone 10: 7). Zone 3 mehrdeutig (ueberlagerte Strassen).
+      Hindernisse: 59 statische Kollisionsboxen (exakt, mit Bounds) + 21663 Kandidaten
+           (nur Position, keine Rotation/Skalierung: 3466 smashable, 14009 Vegetation/Barriere,
+           442 Props, 3746 unklar). Gelaende/Boeschung/Wasser NICHT ausgewertet.
+      Keine zone_hindernisse.csv, keine zone_flaggen_vorschlag.csv, Events nicht untersucht.
+      Offen/Auffaellig:
+        - Zone 1 Leitpfad-Laenge 124,7 m (Codex) vs. ca. 278 m (unsere Abbruch-Linie ueber
+          Haarnadel) -> klaeren, welche stimmt
+        - Zone 1: Tor A liegt auf y=15 (obere Strasse), Tor B auf y=3,7 (untere Strasse);
+          unsere aufgenommene Linie liegt bei y 3,5-4,4. Hoehenebene koennte die Ursache
+          sein, dass in Zone 1 keine Flaggen erscheinen (zu pruefen!)
+        - s_m folgt nur dem Leitpfad, ist keine bestaetigte Fahrstrecke
+      Ergebnis Codex Auftrag 4 (D:\FH2_Flaggen\out\v5\, REPORT.md) 05.11. 22:52:
+        - zone_fahrbahn_1m.csv: 7478 Stationen, 7229 gemessen, 5 interpoliert (unsicher), 244 ungeklaert
+          (Zone 3: 175, Zone 1: 12, Zone 5: 21, Zone 7: 20, Zone 9: 5, Zone 10: 7, Zone 4: 4)
+        - Zone 1: Daten unbrauchbar (CSV hat nur 5 Wegpunkte -> gerade 120,7 m; Meshpfad 360 m;
+          unsere aufgenommene Linie 278,6 m bleibt Grundlage, Codex kann sie nicht nachweisen)
+        - Gelaende: 20571 von 59824 Abfragen getroffen, keine Wasserklassifikation, Zone 6 gar keine
+        - Hindernisse: 5196 Kandidaten 0-12 m am Rand (5172 prozedural mit Modellradius, 24 statisch),
+          4148 mit unklarem Radius extra; keine Rotation/Skalierung
+        - Event-Erkennung: Strings BarnFind/BucketList/FreeRoam/RaceEvent/Showcase/Playground in der exe,
+          aber KEINE Laufzeitvariable gefunden
+      Umgesetzt (Claude, PropTest27.dll mit flags_v5.h):
+        - 40 Torflaggen unveraendert + 235 Flaggen entlang der Zonen = 275 Flaggen
+        - gleichmaessige Abstaende pro Zone: Abschnitte = Laenge/30 gerundet, Abstand = L/n
+          (Z1 9x31,0 m; Z2 42x29,9; Z3 27x29,6; Z4 27x30,1; Z5 19x30,5; Z6 18x29,6; Z7 21x30,5;
+           Z8 16x29,6; Z9 22x30,4; Z10 53x29,7), abwechselnd links/rechts am Fahrbahnrand
+        - Kollisionsfilter: Hindernis im Umkreis (Modellradius, Zaun/Leitplanke mit halber Laenge,
+          Baum max 1,2 m, Busch max 1,0 m, +1,2 m Puffer) -> zuerst andere Strassenseite, sonst
+          weglassen. Weggelassen: Z1 1, Z3 3, Z4 3, Z9 2 (Rest per Seitenwechsel gerettet);
+          Z4 hat danach eine Luecke von 124 m (Zaun beidseitig), Z9 92 m, Z3 62 m
+        - Zone 3: 3 Flaggen ohne Fahrbahndaten weggelassen
+        [x] Phil-Vorgabe 05.11. 23:01: Flaggen NICHT wegen Kollision weglassen, stattdessen ein Stueck
+            naeher zur Strasse (1,0 m nach innen), Loesung fuer Zone 1 und 3 noetig
+        [x] Claude: Version 28 (PropTest28.dll, flags_v6.h, gen_flags_v6.py) 05.11. 23:03: KEIN Kollisionsfilter mehr,
+            Flaggen 1,0 m naeher zur Strasse (auch Torflaggen), 284 Flaggen; Zone 3: 5 Luecken-Flaggen und Zone 9: 1 ueber aufgenommene Linie + Randbreite der Nachbarstationen; Zone 1 jetzt 4,6 m neben der Linie (vorher 5,6)
+        [ ] Zone 1: wahrscheinlich Flaggen im Hang (5,6 m neben der Linie) -> Codex Auftrag 6
+            (Auftrag_Chattie_Codex_Zone1_Zone3.txt + zone_gefahrene_linie_dicht.csv, Ausgabe
+            D:\FH2_Flaggen\out\v7\): Raender entlang der DICHTEN gefahrenen Linie mit Hoehe messen
+        [ ] Zone 3: gleiche Messung entlang der dichten Linie (Strassen ueberlagern sich, Hoehe
+            entscheidet)
+        [x] Phil-Test v28 (06.11. 12:07): Flaggen stehen noch leicht auf der Strasse (1,0 m nach innen war falsch);
+            Suedkueste (Zone 4) = KEINE einzige Flagge sichtbar (im Log: Knoten ok 0/17...0/38, 'aktualisiert 0')
+        [x] Codex Auftrag 6 geliefert (D:\FH2_Flaggen\out\v7\): Zone 1 komplett (280 Stationen, Breite 11,5-12,6 m,
+            Linie 278,6 m bestaetigt), Zone 3: 589 gemessen, 183 ungeklaert, Breiten ab 1,6 m (unsicher);
+            zone3_mesh_auswahl.csv (Kandidaten pro Station mit Hoehe). Zone 5,7,9,4,10 noch nicht erneut gemessen
+        [x] Claude: Version 29 (PropTest29.dll, flags_v7.h, gen_flags_v7.py): Zone 1 + 3 aus v7-Daten (Zone 1 ohne
+            Hang-Schaetzung, Zone 3: 6 Luecken-Flaggen interpoliert), Flaggen jetzt 0,4 m NACH AUSSEN vom Fahrbahnrand
+            (Torflaggen auch), 283 Flaggen, Diagnose in der Statuszeile: Modell 395 geladen?, Knotenvektor, erste
+            fehlende Knoten (fuer Suedkueste)
+        [x] Phil-Test v29 (06.11. 12:18): Zone 1 sieht perfekt aus; Suedkueste weiter keine Flaggen; Pop-in der Flaggen
+            bei Schnellreise (Flaggen erscheinen erst nach Ankunft nacheinander)
+        [x] URSACHE SUEDKUESTE GEFUNDEN (PropTest.log v29): 'Modell395 NICHT geladen' dort. Modell 395 (Horizon Navy) steht in
+            Anthem.track nur 1x (Festival-Gegend) -> wird regional gestreamt; Spawn ohne geladenes Modell = unsichtbar.
+            Instanzen je Flaggenmodell in Anthem.track (Codex v6): 117=1, 118 Hub-Segel=85, 119 Segel=1, 120=1,
+            121 Navy=1, 122 Orange=7, 123 Pink=12, 124 Teardrop=31. Hoehe Segel 4,74 m, Teardrop/Horizon 4,235 m
+        [x] Codex Auftrag 5 (out\v6): KEINE nachweislich unbenutzte Flaggen-Definition gefunden (alle 8 Flaggen-Defs
+            117-124 sind in Anthem.track platziert); fuer Textur-Replacement ohne Nebenwirkung ungeeignet.
+            Empfehlung: isolierte Modell-/Materialzuweisung zur Laufzeit. -> Banner-Idee bleibt offen (1.0 evtl. nicht)
+        [x] Claude: Version 30 (PropTest30.dll, Quelle pt30_quelle.c) 06.11.: pickdef() waehlt pro Gegend die erste GELADENE
+            Flaggendefinition (121,122,123,124,118,119,117,120); Spawn bis 5 pro Frame (statt 1 pro 0,2 s) in 215 m
+            (statt 190 m); Einblenden (Fade-in 0,8 s ueber Presentation-Alpha); Log 'Flaggenmodell gewaehlt: Definition ..'
+            Risiko: Alpha-Aufruf direkt nach Spawn, Segel-Flaggen anders orientiert (Logo/Tuch-Richtung nicht abgestimmt)
+        [x] Phil-Test v30 (06.11. 12:25, nur Zone 2): Flaggen teils ineinander, anderswo fehlen sie, Flaggen in festen
+            Objekten (Mauern; muessen DAVOR stehen), einige schweben etwas. PropTest.log: nur PropTest30 geladen (keine Duplikate),
+            Modell 395 geladen, viele 'Flagge N weg' (Spiel entfernt Flaggen, Neu-Spawn), einzelne 'KEIN KNOTEN'
+        [x] Analyse: Zone 2 = Festival-Strecke mit vielen Betonbarrieren (GEN_OBJ_Barrier_Concrete_Block_* Horizon White/Orange,
+            ~470 Stk. in den Hindernisdaten), Zaeune, Props; Flaggen standen 0,4 m AUSSEN am Strassenrand = in den Barrieren.
+            Schweben wahrscheinlich: Flagge steht auf/in Barriere-Kollision und wird nach oben gedrueckt (nicht bewiesen)
+            Daten: in den Flaggenpunkten gibt es KEINE Paare <10 m -> 'ineinander' kommt zur Laufzeit (Ursache offen)
+        [x] Claude: Version 31 (PropTest31.dll, flags_v8.h, gen_flags_v8.py): Hindernisabstand: Flagge wird in 0,25-m-Schritten
+            von +0,4 m aussen bis 3,1 m nach innen verschoben, bis frei (Modellradius, Zaun/Barriere max(dx,dz)/2, Baum 0,7 m,
+            +0,55 m Puffer, Buesche ignoriert; auch Torflaggen); 15 von 283 Flaggen verschoben. Neu: 'Fallpruefung' im Log
+            (nach 2,5 s: Fall <0,25 m = haengt/schwebt, >2,2 m = faellt tief)
+        [x] Phil-Test v31 (06.11. 12:34, 3 Screenshots): 'immernoch ineinander 2 Flaggen an vielen Stellen, immernoch in Objekten,
+            teils an vielen Stellen gar keine Flaggen, nicht nur Zone 2 -> final fixen'. Screenshots: Herz-Form = zwei gespiegelte
+            Teardrop-Flaggen an einem Punkt, Flaggen neben Steinmauern, lange Strecken ohne Flaggen
+        [x] URSACHE GEFUNDEN (PropTest.log v31, 71 Spawns, 53x 'weg'): das Spiel vergibt freie Objekt-Slots/Objekte neu. Mein alive()-Test
+            (Slot + Objektzeiger + Kennung 0xFFFF0000|Def, bei allen Flaggen gleich) erkennt ein freigegebenes, aber noch nicht neu
+            belegtes Objekt NICHT und haelt zwei Flaggen fuer dasselbe Objekt (z. B. F52/F61/F81 = Slot 24; F56/F73 = Slot 40).
+            Folgen: (1) die Flagge merkt, dass 'ihr' Objekt woanders steht, und ueberschrieb die eigene Tabellenposition x/z mit der
+            der anderen Flagge (Log: F4 und F63 beide 7478.13/-6764.03, F65=F74, F66=F75, F54=F62, F79=F51) -> dort spawnen spaeter ZWEI
+            Flaggen aufeinander (= Herz), an der alten Stelle FEHLT sie; (2) freigegebene Objekte gelten als lebendig -> unsichtbare Luecken
+        [x] Zweiter Befund: 'NODE keiner' (Objekt lebt, aber kein Render-Knoten): Flaggen, die >260 m weg waren (Ausblend-Timer 0x4000),
+            kamen zurueck und waren unsichtbar (F50/F64/F67/F68, Slots 516-648)
+        [x] Dritter Befund: 'Fallpruefung' war falsch gedacht: Fall 0,000 m heisst NICHT schweben, sondern die Flagge steht genau
+            auf ihrer Ausgangshoehe (y_Tabelle = Standhoehe). Check jetzt nur noch bei Fall >2,5 m oder Anstieg >0,4 m
+        [x] Claude: Version 32 (PropTest32.dll in mods\Driftzonen\plugins, Quelle pt32_quelle.c): 
+            - Tabellenposition x/z wird NIE mehr ueberschrieben (eigene Haltepunkt hx/hz)
+            - Slot-Konflikt: beim Spawn verlieren alle anderen Flaggen mit gleichem Objekt/Slot ihr Objekt (Log 'Slot-Konflikt')
+            - Freiliste des Managers (mgr+0x508, Slot bei Knoten+0x1C) wird je Frame gelesen: freigegebener Slot = Flagge weg
+              (Log 'weg (Slot frei)'); selbstpruefend: steht ein frisch belegter Slot in der Freiliste, wird sie abgeschaltet
+            - Zombie: Flagge ohne Render-Knoten >1,5 s -> aufgeben, 6 s Wartezeit, neu setzen (Log 'ohne Knoten')
+            - >260 m: Flagge wird komplett freigegeben (Timer 0x4000 + Geister-Liste), Neu-Spawn erst nach 6 s und nicht,
+              solange ein altes Objekt in 6 m noch sichtbar ist (verhindert Doppelflaggen beim Zurueckkommen)
+            - Einpendeln: 1,5 s nach dem Setzen darf die Physik die Flagge waagerecht aus Waenden/Objekten schieben (nur Drehung
+              wird gehalten); danach Haltepunkt = neue Position (Log 'Einpendeln Flagge N: verschoben um x m')
+            - Statuszeile zeigt Konflikte / Einpendeln / Zombies / fern-frei / Freiliste an/AUS / Treffer
+        [ ] Phil: PropTest31.dll LOESCHEN, nur PropTest32.dll lassen; Zone 2 + Suedkueste + Schnellreise testen, PropTest.log schicken.
+            Gut zu wissen fuer die Auswertung: kommt im Log 'Einpendeln ... verschoben', wirkt die Physik gegen Mauern; kommt es nie,
+            muessen Mauern aus den Daten (Codex) oder per Laufzeit-Sonde gelöst werden
+        [x] Phil-Test v32 (06.11. 12:48, 5 Screenshots): 'ueberall Flaggen, aber wo sie fehlen spawnen sie erst sehr spaet (man ist schon
+            vorbei); stehen immernoch in Steinwaenden, Steilwaenden, Haeusern, teils mitten auf der Strasse; Idee: Flaggenfarbe pro Region
+            (Italien blau, Frankreich andere)'
+        [x] Auswertung PropTest.log v32: Doppelflaggen WEG (nur 4 Slot-Konflikte bei 161 Spawns, 9 'weg'), Freiliste funktioniert,
+            keine Zombies. Einpendeln: nur 3 von 161 Flaggen von der Physik bewegt (<=0,8 m) -> Physik schiebt Flaggen NICHT aus Waenden.
+            Statische Daten: nur 24 AABBs + 10 Steilwand-Stellen, Mauern/Haeuser/Boeschungen fehlen fast komplett.
+        [x] Claude: Version 33 (PropTest33.dll, Quelle pt33_quelle.c, flags_v9.h, gen_flags_v9.py): Daten v9 (exakte AABBs statt 3-m-Kreis
+            bei Props/Gebaeuden, Steilwand-Erkennung aus Geländeneigung >40 Grad / Anstieg >0,6 m -> Flagge max. 0,3 m auf die Strasse;
+            25 Flaggen verschoben). Spaet-Spawn: Wartezeit nach Freigabe 6 s -> 1,5 s, Geister-Sperre nur noch <3 m und 8 s, bis 8 Spawns/Frame;
+            NEU Diagnose im Status/Log: Spawn-Abstand mittel/min, 'Spaet-Spawn Flagge N bei X m' (<150 m), Wartezeit-Zaehler cool/ghost/limit
+        [x] Regionsfarben: sind schon regional: Das Plugin nimmt pro Gegend die erste GELADENE Flaggendefinition (Italien: 121 Horizon-Blau/395,
+            Suedkueste Frankreich: 122 Orange/397; sonst 123 Pink, 124 Teardrop ...), weil das Spiel die Modelle nur regional laedt.
+            Feste Zuordnung (z. B. Italien blau, Frankreich orange) geht nur, wenn das Modell dort geladen ist -> aktuell passt es von selbst
+        [ ] Codex Auftrag 8 (Auftrag_Chattie_Codex_Freiraum_Mauern.txt, Ausgabe D:\FH2_Flaggen\out\v9\): echte Freiraum-Pruefung je Station/
+            Seite/Offset gegen ALLE festen Geometrien (Haeuser, Mauern, Boeschungen, Felsen) + lueckenloses Terrain + Frage nach Raycast-Funktion
+        [ ] Falls Codex keine Daten liefern kann: Laufzeit-Raycast in der Exe suchen (Boden/Kollisionsabfrage), dann Flagge live pruefen
+        [ ] Phil: PropTest32.dll LOESCHEN, nur PropTest33.dll lassen; testen, PropTest.log schicken; bei Flagge mitten auf der Strasse:
+            Zone nennen + Screenshot (evtl. Torflaggen oder falsche Randdaten)
+        [x] Phil-Test v33 (06.11. 12:59, 1 Screenshot): Zone 3: Flaggen stehen noch auf der Strasse; Flaggen spawnen nicht mehr ineinander,
+            aber direkt NEBENEINANDER (ca. 10 cm Platz). Chattie hat Auswertung zu FH3-Flaggen geschrieben (D:\FH2_Flaggen\out\v8\REPORT.md)
+        [x] Auswertung PropTest.log v33: 'Einpendeln Flagge 48/65/66/67: verschoben um 265-298 m' = beim Setzen der Flaggen 73-76 wurden die
+            aelteren Objekte von 48/65/66/67 exakt an deren Platz TELEPORTIERT (Position gleich auf 1 cm). Die Objekte haben verschiedene Slots,
+            sind also nicht dasselbe Objekt -> Ursache offen (Verdacht: gemeinsamer Physik-Koerper oder Spawn schreibt Transform in ein
+            altes Objekt). Das ist das 'Nebeneinander'. Ausserdem: Fallpruefung 'Flagge 67 Fall 26 m' (durchs Gelaende gefallen),
+            Spaet-Spawns 22 von 131 (<150 m), Spawn-Abstand mittel 193 m, min 55 m; 'Wartezeit cool' haeufig (Neu-Spawn nach Freigabe)
+        [x] Chattie Auftrag 7 (FH3-Banner/Modell per Modloader) Ergebnis: neues Modell/neue ID/ChunkMap-Anhang NICHT nachgewiesen
+            (Override-Hook belegt nur lose XML/Medien); konvertierte FH3-Bins sind strukturell lesbar (Vertex 28 B statt 20 B,
+            701 statt 185 Vertices, TRef nicht geprueft) aber nicht freigegeben. -> FH3-Banner fuer 1.0 ABGEHAKT (nach 1.0)
+        [x] Claude: Version 34 (PropTest34.dll, Quelle pt34_quelle.c): 'Verschleppt-Schutz': steht eine Flagge >3 m von ihrem Tabellenplatz
+            (Auto nicht in 10 m), wird sie entfernt (Fade) und spaeter neu gesetzt; Log 'Verschleppt: Flagge i (slot, obj, koerper) steht X m weg,
+            bei Flagge j (slot, obj, koerper, zustand)' und bei jedem Spawn 'Spawn Flagge i slot obj koerper' -> zeigt, ob Objekte denselben
+            Physik-Koerper teilen. Statuszeile: 'Verschleppt N'
+        [ ] Zone 3: Flaggen auf der Strasse -> Ursache vermutlich fehlende/unsichere Fahrbahndaten (175 ungeklaerte Stationen, Breite 1,6 m);
+            Codex muss Zone 3 (und 5, 7) entlang der dichten Fahrlinie neu vermessen (Auftrag 8 deckt Rand/Freiraum ab). Phil: Taste Ende direkt
+            neben einer falschen Flagge druecken + Screenshot -> Flaggennummer im Log
+        [ ] Phil: PropTest33.dll LOESCHEN, nur PropTest34.dll lassen; fahren, PropTest.log schicken
+        [x] Codex Auftrag 8 Ergebnis (D:\FH2_Flaggen\out\v9\REPORT.md): NICHT erfuellt. Nur ein Abfrage-Raster (217.326 Punkte) mit den alten v5-Hindernissen;
+            'kleinster_freier_offset' leer, kein Haus/Mauer/Boeschung geprueft. Gruende: Terrain-LOD0 fehlt bei 82.288 Punkten; Prozedural-Platzierungen
+            haben keine Rotation/Skalierung pro Instanz; nur 251 PhysicsTemplates (GeoChunk12/19) dekodierbar; kein Raycast/RVA geprueft.
+            -> Offline-Weg fuer Mauern/Haeuser/Boeschungen ist ohne neue Erkenntnis eine Sackgasse
+        [x] Claude: Auftrag 9 fuer Chattie/Codex geschrieben (Auftrag_Chattie_Codex_Raycast_und_Geometrie.txt, Ausgabe D:\FH2_Flaggen\out\v10\):
+            A) Raycast/Overlap/Bodenabfrage in der Exe finden (RVA, Argumente, Pseudocode), B) kollidieren lose Objekte (Flagge) mit der Welt? Maske/Gruppe,
+            C) echte Geometrie (Rotation der Prozedural-Instanzen, Terrain-Luecken, Mauern/Haeuser-Typen), D) Zone 3/5/7 neu vermessen + Event-Erkennung
+        [ ] Phil: Auftrag 9 an Chattie geben; Ergebnis (out\v10\REPORT.md) melden. Teil A zuerst melden lassen
+        [x] Phil-Test v34 (06.11. 13:16, 7 Screenshots + 6x Ende-Dump bei zu weit auf der Strasse stehenden Flaggen; Mauer-Clipping bewusst NICHT dabei):
+            Teleport: Flaggen bauen sich vor mir waehrend der Fahrt auf; Wunsch: Regionsfarben - ALLES in Frankreich orange, ALLES in Italien blau
+        [x] Auswertung v34: Verschleppt-Schutz: 0 Faelle (Teleport-Bug weg), aber 23 'ohne Knoten' (Zombies) und 82 von 390 Spaet-Spawns (<150 m).
+            Spaet-Spawn nach Teleport: erst wenn das regionale Flaggenmodell geladen ist (Log: 'Flaggenmodell gewaehlt' kommt erst, wenn Auto schon ~100 m weiter)
+        [x] URSACHE 'Flagge auf der Strasse' (Abgleich Dump-Flaggen F93/F89/F125/F225/F230/F34/F35 mit Fahrbahndaten):
+            (1) Hindernis-Ausweichen verschob Flaggen bis 3,1 m NACH INNEN auf die Fahrbahn (F225/F230 Zone 9: 1,35 m auf der Strasse), 34 von 283 Flaggen >0,3 m drin
+            (2) Zone 3 F93: Station s=149 hat Breiten-Sprung 7,1 -> 11,8 m (ueberlagerte Meshes), Flagge stand 4,3 m auf der Strasse; Zone 9 F219 (interpoliert) 4,7 m
+            (3) Interpolation ueber Fahrlinie lieferte falsche Mittellage (Fahrlinie weicht bis 7 m von der Strassenmitte ab)
+        [x] Claude: Daten v10 (flags_v10.h, gen_flags_v10.py): Ausweichen zuerst NACH AUSSEN (bis +2,9 m), nach innen nur bis -0,35 m; Breiten-Ausreisser (>1,5 m vom
+            Median der 41 Nachbarstationen) gelten als ungemessen; Luecken <=60 m werden ueber die Randpunkte interpoliert, groessere ueber die Linie mit +0,8 m Zusatzabstand;
+            Flaggen >0,3 m auf der Strasse: 34 -> 19 (Rest: Tor-Flaggen und 'nicht frei'-Faelle)
+        [x] Claude: Version 35 (PropTest35.dll, pt35_quelle.c): Regionsfarben: Frankreich (x < 6000: Zonen 4,5,6,9,10) = Definition 122 (Modell 397 orange), Italien (Zonen 1,2,3,7,8)
+            = 121 (395 blau); Rueckfall nur auf die andere der beiden Farben, dann Pink/Teardrop/Segel; bis 24 Spawns/Frame, Fade-in 0,5 s; Status-Zeile 'geladen: <Modell-IDs>'
+            (zeigt, ob 397 z. B. in der Stadt Zone 9 ueberhaupt geladen ist). RISIKO: ist 397 dort nicht geladen, bleibt es blau (Modell kann nicht erzwungen werden)
+        [ ] Phil: PropTest34.dll LOESCHEN, nur PropTest35.dll lassen; Zone 9 (Stadt) und Suedkueste testen, PropTest.log schicken (Status-Zeile 'geladen:' verraet Verfuegbarkeit)
+        [ ] Annahme Regionsgrenze x=6000 (Frankreich links, Italien rechts) - Phil bitte bestaetigen (Zone 4 Suedkueste liegt bei x~4700, Zone 2 bei x~7300)
+        [x] Phil-Test v35 (06.11. 13:25, 1 Screenshot): 'Flaggen stehen noch genauso wie vorher, teils schlimmer, mitten auf einer Kreuzung'
+        [x] URSACHE: MEIN FEHLER beim Bauen: PropTest35 wurde mit einer VERALTETEN Flaggenliste gebaut (flags7.h war vor dem letzten Generator-Lauf
+            kopiert worden; der Breiten-Ausreisser-Filter fehlte). Beleg: Log-Dump F93 soll 9604.84/-5851.96 = unveraendert zu v34.
+            Region-Logik/Statuszeile von v35 waren korrekt (Log: 'Region Italien', 'geladen: 397 399 393' an der Suedkueste)
+        [x] Claude: Version 36 (PropTest36.dll, pt36_quelle.c, flags_v10.h korrigiert): gleiche Logik wie v35, aber mit der AKTUELLEN Liste
+            (F93 jetzt 4,7 m verschoben auf 9606.83/-5856.24; F219 verschoben). Build-Pruefung kuenftig: Flaggenliste per cmp gegen den Generator-Output pruefen
+        [ ] Phil: PropTest35.dll LOESCHEN, nur PropTest36.dll lassen; Kreuzung/Zone 2+3 erneut testen. Ende-Dump bei einer Flagge auf einer Kreuzung (Nummer im Log)
+        [x] Phil-Test v36 (06.11. 13:30, 2 Screenshots Zone 3): 'stehen immernoch so, auf der Strasse und der Kreuzung'. Dumps: F107, F105, F89 (alle Zone 3)
+        [x] Analyse Screenshots: Flagge steht an der weissen Randlinie / am Fahrbahnrand genau dort, wo eine Schotter-Nebenstrasse einmuendet (Kreuzung);
+            Mast-Fuss liegt auf dem Asphalt-Randstreifen. Zone-3-Strassenbreite ist laut Daten fast ueberall 11,8 m (589 Stationen); die Stationen am Anfang (s 24-36)
+            sind 'ungeklaert' mit falscher Breite 3,3 m -> Pruefwerte bei diesen Flaggen taeuschen. Ein harter Beleg fuer 'mitten auf der Strasse' fehlt (Fahrlinie liegt 5-7 m neben F89/F105/F107)
+        [x] Chattie Auftrag 9 (D:\FH2_Flaggen\out\v10\REPORT.md): KEINE Raycast-Funktion gefunden (nur Ghidra-Ausschnitte; naechster Schritt: FUN_1412cc010 + vtable +0xE0 decompilieren,
+            XREFs). AddPhysics: Gruppe 6 oder 10 (10 wenn obj+0x65 gesetzt); Kollisionsfilter unbekannt. Zone 2: 40 Gebaeude-AABBs (exakt) im Flaggenkorridor
+            (ita_bldg_town_*), 208 Steilpunkte >35 Grad; Zone 3: keine Gebaeude/Mauern im 8-m-Band (Terrain fehlt aber bei 62 %). Event-Variable: nicht gefunden
+        [x] Claude: Version 37 (PropTest37.dll, pt37_quelle.c, flags_v11.h, gen_flags_v11.py): Abstand der Zonenflaggen zum Fahrbahnrand 0,4 -> 0,9 m nach AUSSEN
+            (Mast-Fuss ausserhalb des Asphalt-Randstreifens; Torflaggen bleiben 0,4), 40 Zone-2-Gebaeude-AABBs (Chattie v10) als echte Rechtecke eingerechnet.
+            Flaggenliste per cmp mit Generator-Ausgabe geprueft (identisch)
+        [ ] Phil: PropTest36.dll LOESCHEN, nur PropTest37.dll lassen; testen. Bei Flagge auf der Kreuzung: Ende direkt daneben + Screenshot (Nummer steht im Log)
+        [ ] Offen/Idee: Kreuzungen erkennen (Breiten-Sprung) und Flagge dort entlang der Strasse verschieben (max. +-10 m) - noch NICHT umgesetzt
+        [ ] Naechster Raycast-Schritt: Ghidra-Decompile FUN_1412cc010 + vtable +0xE0 von AddPhysics + XREF-Suche (Chattie, Auftrag 10)
+        [x] Phil 13:34: 'alle Flaggen pauschal nach aussen schieben ist NICHT die Loesung!' - er hat ~13:16 alle falsch stehenden Flaggen einzeln mit Ende geclippt.
+            -> v37 (0,9 m pauschal) VERWORFEN. Ende-Dumps sind die Wahrheit: F93, F89 (Zone 3), F105/F107 (Zone 3, v36-Test), F125 (Zone 4), F225/F230 (Zone 9), F34/F35 (Tor Zone 9)
+        [x] URSACHE der Zone-3-Faelle (Fahrbahndaten an den Flaggenstellen): F105 liegt im Abschnitt s=492-516, status 'ungeklaert', Untergrund 'schotter/dreck', Breite 5,8-6,0 m:
+            die Strassenmessung dort beschreibt die SCHOTTER-NEBENSTRASSE (Kreuzung), nicht die Asphaltstrasse -> Flagge steht an der Kreuzung. F89: s=18-42 'ungeklaert', Breite 3,3 m (falsch).
+            F107: Breitensprung 9,7 -> 11,96 m bei s=569 (Kreuzungsmuendung). Das Ende-Dump-Muster passt: alle falschen Zone-3-Flaggen liegen an 'ungeklaert'/Breitensprung-Stellen
+        [x] Claude: Version 38 (PropTest38.dll, pt38_quelle.c, flags_v12.h, gen_flags_v12.py): Abstand wieder 0,4 m (wie v36); NEU 'Stabilitaetspruefung' je Flagge: Station und +-6 Nachbarn
+            gemessen, Breite +-1,2 m konstant, Randpunkte ohne Sprung >3 m. Unstabile Stellen (Kreuzungen/Mehrdeutigkeit): Flagge wird entlang der Strasse auf die naechste stabile
+            Station (bis 45 m) verschoben; ohne stabile Station und 'ungeklaert': ausgelassen. 30 Flaggen verschoben, 3 ausgelassen (Zone 3: k=1 bei s=30, k=3, k=20), 280 statt 283
+            Mindestabstand 8 m zwischen Zonenflaggen. Plus Chattie-Gebaeude-AABBs Zone 2 (40 Stk.)
+        [ ] Phil: PropTest37.dll LOESCHEN, nur PropTest38.dll lassen; testen - gleiche Stellen (Zone 3 Kreuzung, Zone 9 Stadt, Zone 4 Kurve) nochmal ansehen; falsche Flaggen wieder mit Ende clippen
+        [x] Phil 06.11. 14:00: 26 Screenshots (Videos\Captures, 13:40:44-13:49:58) + je ein Ende-Dump bei v38; ALLE falschen Flaggen markiert.
+            Zuordnung Screenshot <-> Dump 1:1 in zeitlicher Reihenfolge (26 Bilder, 26 Dumps). Naechste Flagge im Dump = markierte Flagge.
+            Ergebnis pro Flagge (F = Index in v12/v38, (Zone,k) = Position in der 30-m-Reihe):
+              IN WAND/HAUS/BOESCHUNG: F53 F59 F61 F63 (Zone 2, Mauer/Haus am Strassenrand), F65 (hinter Mauer), F119 F125 F127 F131 F132 F133 F134 F135
+              (Suedkueste, schraege Stuetzmauern - Fahrbahnrand der Daten liegt am Mauerfuss, Flagge stand 0,3-0,4 m dahinter), F242 (Fels, Zone 10)
+              ZU WEIT WEG / HINTER ABSPERRUNG: F222 F227 (Zone 9, 2,15 m hinter Rand: Gelaender/Buswartehaus), F34 F35 (Tor Zone 9), F14 F15 (Tor Zone 4,
+              hinter Leitplanke bzw. oben auf der Mauer), F26 F27 (Tor Zone 7, hinter niedrigen Mauern), F38 F39 F279 (Zone 10, im Gebuesch/Gras)
+              AUF DER STRASSE: F122 (Daten-Breite nur 7,1 m statt ca. 16 m = Messfehler), F105 (Zone 3, auf der Randlinie), F57 (Zone 2, auf der Randlinie)
+              KREUZUNG: F102 (Zone 3, Seitenweg/Schotter links) -> entfernt
+            Ursache der Wand-Faelle: Erzeuger schob Flaggen bei Hindernissen NACH AUSSEN (bis 2,15 m) und erlaubte nach innen nur 0,35 m -> hinter Mauern/Gelaender.
+        [x] Phil: 'Flaggenabstaende nicht aendern, nicht naeher zusammenschieben, nur die Kreuzungsflagge entfernen'. Ursache der Haeufungen: v12 hatte bei 30
+            'unruhigen' Stationen die Flagge bis zu 31 m laengs der Strasse verschoben (z.B. Zone 3: F102/F103 nur 10 m auseinander).
+        [x] Claude: Version 39 (PropTest39.dll, pt39_quelle.c, Daten v13 = flags_v13.h, gen_flags_v13.py, 281 Flaggen):
+            - Stationen wieder EXAKT bei k*L/n (30-m-Raster, alternierend), kleinster Abstand in jeder Zone jetzt 28 m; keine Verschiebung laengs der Strasse mehr
+              (nur bei kleinen Datenfehlern <=8 m wird die Quergeometrie der Nachbarstation uebernommen, Position bleibt auf der Station)
+            - F102 (Zone 3, k=16) entfernt (Kreuzung), sonst nur 1 Flagge weniger: Zone 3 k=1 war schon vorher 'unklar' ausgelassen
+            - 28 markierte Flaggen EINZELN nur quer zur Strasse korrigiert (Laengsposition unveraendert): Wand/Haus/Boeschung 0,6-1,4 m zur Strasse hin
+              (Ziel -0,6 ... -1,4 m vom Datenrand), hinter Gelaender/Mauer bei Toren 1,0-1,6 m hin, F57/F105 0,6-0,9 m nach aussen, F122 mit Median-Breite der Nachbarn.
+              Alle anderen Flaggen: unveraendert gegenueber v38 (ausser Rueckkehr auf das exakte 30-m-Raster).
+            - Zombie-Erholung schneller: Flagge ohne Render-Knoten wird nach 0,8 s (vorher 1,5 s) neu gesetzt, Wartezeit 0,3 s (vorher 3 s) und KEIN 8-s-Geisterschutz
+              (unsichtbares Objekt) -> Ursache der Spaet-Spawns: im Log Zombie-Serie nach Teleport (F105-F108: Spawn, 'ohne Knoten', Neu-Spawn erst bei 42-80 m)
+        [ ] Phil: Test v39 - jede noch falsche Flagge wieder mit Screenshot + Ende (Timestamps), gleiche Methode wie heute
+        [ ] FARBEN Italien gruen / Frankreich blau: mit den vorhandenen FH2-Modellen NICHT sauber moeglich: gruen gibt es nur als SEGEL (Modell 381, andere Form) und
+            es ist nur selten geladen (13 von 113 Status-Zeilen); blau (395) ist in Suedkueste/Zone 10 nicht geladen (Log 'geladen:' dort nur 397 399 393).
+            Verlaesslich ueberall geladen: nur 397 orange und 393 Teardrop. v39 behaelt deshalb Frankreich orange / Italien blau. Echte Loesung = eigene Textur
+            (gruen eingefaerbte Teardrop-Textur) - aendert aber alle gleichfarbigen Festival-Flaggen (Phil: nichts Bestehendes aendern) -> offen, Entscheidung Phil
+        [ ] TEXTURAUFLOESUNG der Flaggen: Original-FH2-Teardrop-Textur ist klein (ca. 512 px) und wird fuer zur Laufzeit erzeugte Objekte evtl. mit tiefer Mip-Stufe
+            gestreamt; nicht aenderbar ohne eigene Textur. Vorschlag: Phil vergleicht im Spiel eine Festival-Flagge der Welt mit unserer in gleicher Entfernung
+        [x] Phil 06.11. 14:25: v39 'sehr geile Leistung', noch ein paar Stellen; Wunsch: Flaggen 90 Grad zur Strasse (bisher 25 Grad Drehung); Zone 3: eine Flagge
+            steht noch auf der Strasse. 7 neue Screenshots (14:15:57-14:21:19) + 7 Ende-Dumps (v39), 1:1 zugeordnet:
+              F57 (Zone 2): jetzt hinter niedriger Mauer (0,7 m) - in v38 (0,07 m) auf der Randlinie -> Mitte: 0,4 m
+              F105 (Zone 3): steht mit dem Fuss noch auf dem Asphalt (1,0 m) -> 1,8 m   <- die gemeldete Zone-3-Flagge
+              F103 (Zone 3, Station 504, Daten 'ungeklaert'/Schotter 6 m statt Asphalt 10,8 m): 1,2 m innerhalb des Datenrandes -> 1,5 m nach aussen
+              F89 (Zone 3, Station 60, Daten 'ungeklaert' 3,3 m breit): 2,6 m neben dem Rand -> 1,5 m zur Strasse hin
+              F198, F202 (Zone 8, Schotter): stehen in Baeumen/Gebuesch (0,31 m hinter Rand) -> 1,2 m zur Strasse hin
+              F123 (Zone 4, in v38 F122): MEIN FEHLER in v39 - Flagge stand mit Median-Breite 0,4 m INNERHALB des Randes mitten auf der Strasse (Datenbreite dort 7,1 m,
+              in v38 stand sie auf der Randlinie) -> jetzt 0,85 m ausserhalb des Datenrandes
+        [x] Claude: Version 40 (PropTest40.dll, pt40_quelle.c, Daten v14 = flags_v14.h, gen_flags_v14.py, 281 Flaggen):
+            - Drehung: TURN 25 -> 0 Grad, Z-Achse der Flagge exakt parallel zur Strassenrichtung (Tuchebene 90 Grad zur Fahrtrichtung, zur Fahrtrichtung der Daten, Seite
+              gespiegelt wie bisher); auch die 40 Tor-Flaggen (vorher alte Winkel) nutzen jetzt die Strassenrichtung der Station
+            - 7 Einzelkorrekturen (siehe oben), alle anderen Flaggen identisch mit v39 (Position)
+            - Hinweis falls Drehung falsch herum: andere Richtung waere 90 Grad (Tuch parallel zur Strasse) - kein Aufwand, nur Konstante
+        [ ] Phil: Test v40 (Drehung pruefen: Tuch senkrecht zur Strasse? lesbar fuer entgegenkommende/ankommende Fahrer?)
+        [x] Phil 06.11. 14:39: v40 nur noch 3 Fehler (4 Screenshots 14:33:32-14:38:33, 4 Dumps, F57 zweimal):
+              F57 (Zone 2): steht an einer Mauerecke - 0,4 m: im Mauereck/Mauer; v38 0,07 m: Fuss auf Randlinie; Luecke zwischen Asphalt und Mauer nur ca. 0,2 m
+              F105 (Zone 3): v40 1,8 m, Fuss immer noch am Asphaltrand -> Daten-Rand dort ca. 1,2 m zu eng -> 3,0 m
+              F123 (Zone 4): v40 0,85 m, Fuss immer noch 0,5 m innerhalb der weissen Randlinie -> 2,05 m (Datenbreite dort nur 7,1 m)
+        [x] Claude: Version 41 (PropTest41.dll, pt41_quelle.c, flags_v15.h, gen_flags_v15.py): nur diese 3 Flaggen quer verschoben (0,25 / 1,2 / 1,2 m), alle anderen unveraendert
+        [ ] Phil: Test v41 (Drehung gut? weitere Fehler?)
+        [x] Phil 06.11. 14:46: v41: noch 2 Fehler (Screenshots 14:43:34, 14:44:50; Dumps F57 Zone 2, F123 Zone 4); Pop-in besser, aber noch spuerbar
+              F57: Mauerecke direkt am Fahrbahnrand (Mauer endet an der Flagge, Daten haben keine Mauer) - jede Quer-Position scheitert (v38 0,07 / v40 0,4 / v41 0,15)
+                   -> v42: Flagge 4 m laengs der Strasse hinter das Mauerende verschoben (Abstand zu den Nachbarn 24 / 37 m statt 30 / 30) - bewusste Ausnahme
+              F123 (Zone 4, Haarnadel): Datenbreite 7,1 m falsch (Nachbarn ca. 16 m): Flagge stand 1,5 m neben der Aussenmauer auf dem Asphalt -> Ziel 7,3 m von der Mitte
+                   (0,7 m vor der Aussenmauer, wie die korrigierten Nachbarn)
+              Pop-in-Log v38-v41: Spaet-Spawns (<150 m) kommen fast nur als Serie nach Teleport (5-9 Flaggen auf einmal bei 55-146 m) + Zombie-Neustarts;
+              bei normaler Fahrt Spawn-Abstand im Mittel 185 m
+        [x] Claude: Version 42 (PropTest42.dll, pt42_quelle.c, flags_v16.h, gen_flags_v16.py): F57/F123 wie oben; Spawn-Radius 215 -> 235 m (Aufgeben 260 -> 270 m,
+            Fade-Rettung bis 262 m); Zombie-Erkennung schneller (Alter > 0,5 s, kein Knoten > 0,6 s statt 1,0 s / 0,8 s)
+        [ ] Phil: Test v42 (Pop-in nach Teleport? bei normaler Fahrt?) - weitere Idee: Flaggen schon beim Laden der Gegend spawnen (vor Teleport-Ende) nicht moeglich
+        [x] Phil 06.11. 14:51: F57 haette einfach noch ein Stueck weiter rein (zur Strasse) gemusst, nicht laengs verschoben. -> v43 (PropTest43.dll, flags_v17.h,
+            gen_flags_v17.py): Laengsverschiebung zurueckgenommen, F57 wieder auf der 30-m-Station, quer 0,6 m weiter zur Strasse (Ziel -0,45 m vom Datenrand statt +0,15);
+            alles andere = v42 (F123 7,3 m von der Mitte, Spawn-Radius 235 m, schnellere Zombie-Erkennung)
+        [ ] Phil: Test v43
+        [x] Phil 06.11. 14:54: v43: F123 noch nicht perfekt (1 Screenshot 14:54:01 + Dump), 'wird besser'; Pop-in noch etwas verbessern
+              F123: Fuss noch ca. 0,5-1 m innerhalb der rechten weissen Randlinie (Haarnadel, Aussenseite, Verge 2 m bis zur Mauer) -> Ziel 8,3 m von der Mitte (+1,0 m)
+              Pop-in-Log v43 (199 Zeilen): Spaet-Spawns nur in Serien (Teleport/Start: 9 + 6 + 4 Flaggen bei 66-147 m) plus 6 Zombies direkt nach dem Teleport; bei normaler
+              Fahrt keine Spaet-Spawns, mittlerer Spawn-Abstand 202 m (v42 wurde offenbar nicht geladen, nur v43 im Log)
+        [x] Claude: Version 44 (PropTest44.dll, pt44_quelle.c, flags_v18.h, gen_flags_v18.py): F123 +1,0 m nach aussen; Einblenden laenger fuer Flaggen, die naeher als 160 m
+            entstehen (1,4 s statt 0,5 s -> nach Teleport weniger hartes Auftauchen); Zeitstempel [t=Sekunden] in Spawn-/Zombie-/Dump-Zeilen des Logs (zur Diagnose der Wartezeit)
+        [ ] Phil: Test v44; Pop-in bei normaler Fahrt oder nur nach Teleport? (Antwort entscheidet naechsten Schritt)
+        [x] Phil 06.11. 14:59: v44: F123 immer noch nicht perfekt (Screenshot 14:58:23: Fuss genau auf der Randlinie); Pop-in noch etwas zu stark
+              F123: -> weitere +1,0 m nach aussen (Ziel 9,3 m von der Mitte; Randstreifen bis zur Mauer ca. 1,5 m)
+              POP-IN URSACHE (Zeitstempel-Log v44): Das Spiel blendet lose Teile aus (und gibt den Slot frei), wenn dx^2 + 2*dz^2 > 22500 von ihrem Herkunftspunkt (B0/B4).
+              Mein Mittelpunkt-Trick halbiert die Entfernung - aber nur ab dem naechsten Frame, und bei dz > ca. 212 m reicht auch die halbe Entfernung nicht
+              (2*(dz/2)^2 > 22500). v42-v44 hatten den Spawn-Radius auf 235 m erhoeht -> Flaggen am Rand wurden vom Spiel sofort wieder entfernt ('weg (Slot frei)',
+              z. B. F5/F48 bei t=4.0 s nach 0,6 s weg, Neu-Spawn bei 5,6/6,1 s; F76-F78 Slot sofort wieder vergeben; 11 'weg' bei 107 Spawns) -> genau das sichtbare Spaet-Auftauchen.
+              Teleport/Start: 18 Spawns bei t=4,0 s im selben Frame, 6 Zombies (ohne Knoten) bei 5,1 s -> Neu-Spawn 5,4 s; weitere Teleport-Serien bei 9,8 / 16,0 / 56,1 s
+        [x] Claude: Version 45 (PropTest45.dll, pt45_quelle.c, flags_v19.h, gen_flags_v19.py): (1) B0/B4 und Ausblend-Timer sofort im Spawn-Frame gesetzt (nicht erst im naechsten Frame);
+            (2) Spawn nur noch im sicheren Ausblendbereich: Kreis 240 m UND dx^2+2dz^2 < 78000 (entspricht dz bis ca. 197 m), Aufgeben/Re-Arm bei dx^2+2dz^2 > 86000 oder 270 m;
+            (3) 'weg'-Zeilen mit Zeitstempel; (4) F123 wie oben
+        [ ] Phil: Test v45: weniger 'weg' (Log: Zeilen 'Flagge N weg'), Pop-in besser? Idee fuer danach: Spawn-Radius je Richtung, wenn B0/B4-Trick weiter optimierbar
+        [x] Phil 06.11. 15:06: F123 'muss noch weiter nach aussen' (Screenshot 15:05:42). WICHTIG: der Screenshot zeigt ZWEI Flaggen nebeneinander und das Log zwei Banner
+            (PropTest 44 + 45 im selben Spiellauf, zwei Dumps mit F123 bei 4767.50 (v44) und 4766.64 (v45)) -> PropTest44.dll war beim Spielstart noch im Plugin-Ordner
+            (jetzt geloescht). Auswertung v45 (21 'weg', 25 Zombies, 189 Spawns) ist dadurch verfaelscht (zwei Plugins kaempfen um dieselben Slots).
+            -> immer ALLE alten PropTest*.dll loeschen und das Spiel neu starten, bevor getestet wird
+        [x] Claude: Version 46 (PropTest46.dll, pt46_quelle.c, flags_v20.h, gen_flags_v20.py): F123 +0,5 m nach aussen (jetzt 9,8 m von der Mitte, vorher 9,3 m; Randstreifen zwischen Linie und Mauer nur ca. 1,4 m);
+            sonst identisch mit v45 (Spawn im sicheren Ausblendbereich, B0/B4 sofort beim Spawn)
+        [ ] Phil: Test v46 mit NUR PropTest46.dll im Ordner, Spiel neu gestartet; Pop-in + F123
+        [x] Phil 06.11. 15:09: F123 'nochmal 0,5 nach aussen, dann perfekt' -> v47 (PropTest47.dll, flags_v21.h, gen_flags_v21.py): F123 +0,5 m (jetzt 10,3 m von der Mitte); sonst = v46/v45
+        [ ] Phil: Test v47 (nur PropTest47.dll im Ordner, Spiel neu starten): F123 perfekt? Pop-in-Log sauber (ein Plugin)?
+        [ ] Naechster Weg fuer Mauern etc.: (a) LAUFZEIT-Sonde im Plugin (Flagge/Testobjekt an Kandidatenplatz setzen, Physik zeigen lassen ob sie
+            an etwas stoesst - noch nicht belegt, ob Flaggen mit Mauern kollidieren), oder (b) Raycast/Overlap-Funktion in der Exe per Disassembly
+            suchen (forza_durango_release_final.exe liegt vor), oder (c) Codex: Rotation der Prozedural-Instanzen finden (Rohdaten der Zellen)
+        [ ] Offen: Mauern (Steinmauern, GEN_OBJ-Mauern) fehlen komplett in den Hindernisdaten (nur Zaun/Leitplanke/Barriere/Props/Baeume)
+            -> Codex-Auftrag 8 noetig: statische Kollisionsgeometrie (PhysicsTemplate/BARRIERTEMPLATE, Typ Mauer/Wall/Stone) entlang der
+            Zonenlinien inkl. Rotation (Hindernisse bisher nur Position+Radius, ohne Drehung)
+        [ ] Offen: Hindernisdaten sind unvollstaendig (nur 15 Treffer) -> Mauern/Barrieren, die nicht in den Daten sind, bleiben;
+            Option Laufzeit: Flagge nach Fallpruefung nach innen versetzen/neu spawnen
+        [ ] Phil: PropTest31 testen (PropTest30 vorher loeschen), Zone 2 befahren; wenn 'ineinander'/Mauer: Taste Ende
+            direkt neben der Stelle druecken (schreibt Flaggen-Dump ins Log) + Screenshot, PropTest.log schicken
+            da?), Schnellreise-Pop-in, Zone 1, PropTest.log schicken
+        [ ] Codex Auftrag 7 (Auftrag_Chattie_Modell_per_Modloader.txt, Ausgabe D:\FH2_Flaggen\out\v8\): Modell per
+            Modloader/ChunkMap in Spiel bringen (EO-Override fuer ChunkMap/GeoChunk?, freie Modell-IDs <17221, Modell-Ladeanforderung,
+            konvertiertes Modell pruefen). Idee: neue Modell-ID + neue Definition (Plugin legt sie in freien Root-Slot)
+            (Zone 4) befahren, PropTest.log schicken
+        [ ] Suedkueste (Zone 4): Ursache klaeren. Hypothese: Modell 395 ist dort nicht geladen (Festival-Modell wird
+            regional gestreamt) oder Knotenindex stimmt nicht; Diagnose in v29
+        [ ] Zone 4/10-Kantensprunge, Zone 5/7/9: Codex soll auch dort entlang der dichten Linie neu messen
+        [ ] Event-Erkennung weiter offen (kein Status gefunden): Alternative = Plugin erkennt Event
+            indirekt (z. B. Abstand/Zonenstatus, Rennmodus-Zeiger testen) -> Phil kann pruefen, ob Flaggen
+            im Rennen erscheinen
+
+      Naechste Schritte:
+        [ ] Claude: Codex-Raender (7336 Stationen) fuer Flaggenpunkte nutzen, Flaggen
+            gleichmaessig verteilen (n = L/30, d = L/n), Punkt 1 m vom Rand
+        [ ] Claude: Kollisionsfilter: 59 AABB exakt (+1,5 m Puffer), Kandidaten mit
+            Annahmeradius (Baum/Barriere/Prop) -> Flagge weglassen
+        [ ] Codex: 142 offene Stationen loesen (Zone 3, 5, 7, 9, 1), Kantensprunge pruefen,
+            Gelaende/Boeschung/Wasser am Rand, Rotation/Skalierung der Platzierungen
+            (Auftrag 4: Auftrag_Chattie_Codex_Strecke_Teil2.txt, Ausgabe D:\FH2_Flaggen\out\v5\)
+        [ ] Zone 3, Zone 1: Streckenwahl pruefen (Phil/Claude)
+[ ] Flaggen duerfen in Events (Rennen, Showcase, Bucket List, Rivalen ...) NICHT laden
+      -> Event-Erkennung im Spiel finden, Flaggen-Plugin pausiert dann + raeumt auf
+      -> Test: Rennen, Showcase, Bucket List, Rivalen, Barn Find, Autokauf/Tuning-Menue,
+         Fotomodus, Fast Travel. Ausserdem pruefen: duerfen Driftzonen-Abbruchregeln
+         und Punkte in Events ueberhaupt aktiv sein? (sollten es nicht)
+[ ] FH3-Drift-Zonen-Banner statt Festival-Flagge
+      Stand 05.11. abends: Codex hat die 7 FH3-Modelle (australiaout 945-951) ins
+      FH2-Format konvertiert: D:\FH2_Flaggen\FH3_Driftzone_FH2_angepasst\FH2_modelbins\
+      Probleme:
+        - Modelle zeigen auf FH2 flags.materialbin + FH2-Horizon-Textur (0x43DEEED3)
+          -> Form FH3, Aufdruck aber noch Festival-Logo
+        - FH3-Texturen (D:\FH3_Flaggen\out\textures) sind PC-Format, nicht Durango
+          -> muessen als FH2-Durango-Swatchbin (BC7) neu erzeugt werden
+        - FH2-flags-Material kann nur den Diffuse-Kanal tauschen (Normal/Gloss/AO fallen weg)
+        - Im Spiel NICHT getestet
+        - Einspielen offen: FH2-Modelle liegen in GeoChunks (PGZP), nicht als lose Dateien.
+          Weg ueber Extra Options / Flaggen-Plugin ohne Spieldateien und ohne alle
+          Festival-Flaggen zu tauschen noch unbekannt.
+      Ergebnis Chattie Auftrag 2 (D:\FH2_Flaggen\out\v3\REPORT.md, model_bounds.csv):
+        SICHER:
+          - FH3-Texturen: 0x787D14D4 = Diffuse (1024x2048 BC7), 0x43AF8716 = Gloss (BC7),
+            0x7B965D76 = Normal (BC5), 0x827E0BA8 = AO (128x256 BC4)
+          - EO 0.4.4: loser Medien-Override aktiv (mediaoverride > mediapc > mods > Original);
+            EntityModel-XMLs funktionieren
+          - Modell 395 wird ueber Model-ID im GeoChunk/ChunkMap geladen, NICHT ueber losen Pfad
+          - Texturen werden dagegen ueber losen Pfad aus dem Material geladen (Override moeglich)
+          - Modelbin 395 hat keinen eigenen Kollisions-Blob (Physik kommt woanders her)
+          - Groesse: FH3 4,58 m hoch, 1,25 x 0,77 m; FH2 395: 4,24 m hoch, 1,58 x 0,54 m;
+            Ursprung bei beiden nahe Mastfuss
+        UNBEKANNT: Override fuer .modelbin/.swatchbin im Hook, neue Modell-ID/GeoChunk,
+          Layout der Definitionstabelle (121-124), Mastradius/Tuchmasse, Ausrichtung
+        NICHT ERLEDIGT: Durango-Swatchbin der FH3-Diffuse (kein BC7-Encoder/Durango-Tiling dort),
+          PNG-Vorschau, Test im Spiel
+      Ergebnis Chattie Auftrag 3 (D:\FH2_Flaggen\out\v4\REPORT_v4.md):
+        TEIL A ERLEDIGT: driftzone_banner.swatchbin (256x512, BC7 sRGB, Durango-Tilemodus 14,
+          10 Mips, GUID 7a8b064b-3907-4c7e-b01d-ccd6646eda81, 180307 Bytes). Selbsttest ok
+          (Retile der FH2-Referenz bitgleich, Rueckdekodierung SSIM 0,9954). Nicht im Spiel getestet.
+          Vorschau geprueft: DRIFTZONE-Banner (tuerkis) + Holzteile, sieht korrekt aus.
+          RISIKO: Alpha-Kanal ist ~0 (max 4) - schon in der FH3-Quelle. Wenn das FH2-Flaggen-
+          material Alpha als Transparenz/Cutout nutzt, waere die Flagge unsichtbar.
+          -> Variante mit Alpha=255 neu encoden lassen und beide testen.
+        TEIL B (Ghidra, sicher): Definition = 32-Bit-Key: key&0xFFFF -> Roottabelle (manager+0x8),
+          key>>16 = Unterindex (0xFFFF = Root direkt, sonst Untertabelle bei def+0x88);
+          DefinitionModel liest 32-Bit-Modellverweis bei def+0xA8; Instanz speichert Key bei
+          instance+0x124; def+0x74 steuert einen Zweig in BindModel; BindModel ruft FUN_140377120;
+          AddPhysics geht ueber Instanz-Vtable +0xE0 mit Definitionszeiger.
+          Unbekannt: Tabellenkapazitaet/Allokator, Physikfelder, Modell-Handle, ob EO .modelbin
+          loest. Wege A/C/D: unbekannt bis unwahrscheinlich; B (eigene Definition) = beste Idee,
+          noch kein Patch moeglich.
+      Naechste Schritte (nach Prioritaet, Banner ist NICHT kritisch fuer 1.0):
+        [ ] Chattie: Banner-Textur zusaetzlich mit Alpha=255 encoden (Variante B)
+        [x] DefDiag2-Test gelaufen (05.11. 22:25), Ergebnis:
+            - Definitionstabelle: Root-Tabelle mit >16384 lesbaren Slots, 401 gueltige Definitionen,
+              hoechster belegter Index 16208 (viele freie Slots)
+            - Defs 121-124 sind bis auf wenige Felder IDENTISCH (Physik-Floats +0x08..+0x70 gleich):
+              +0xA8 Modell-ID: 121=395, 122=397, 123=399, 124=393 (nicht 395/397/399/401!);
+              +0xC0 laufende Nummer 0x30..0x33, +0xC4 Hash, +0x80/+0x88/+0xF0 interne Zeiger
+              => Kollision/Physik steckt in der Definition, nicht im Modell
+              => eine kopierte Definition mit anderer Modell-ID erbt das Flaggenverhalten
+            - +0x74 = 0 bei allen
+            - Modell muss trotzdem als Ressource (ChunkMap-ID) existieren -> neues FH3-Modell
+              weiter blockiert
+        [x] Phil-Vorgabe 05.11. 22:29: keine bestehende Flagge ersetzen -> Objekt muss im Spiel
+            KOMPLETT unbenutzt sein (Definition + Modell + Textur nirgends referenziert)
+        [x] DefDiag3.dll gebaut/in plugins gelegt (schreibt alle ~401 Definitionen, DefDiag3.log);
+            alte DefDiag2.dll vorher loeschen
+        [x] Phil: DefDiag3.log geschickt (05.11. 22:33): 401 Definitionen, jede mit EIGENEM Modell
+            (keine Modell-ID doppelt, Modell-IDs 3..982); +0xC0 = Typ-Gruppe (Flaggen 121-124 = Typ 48-51)
+            Datei: DefDiag3.log -> an Chattie/Codex zu Auftrag 5
+        [ ] Chattie/Codex Auftrag 5 (Auftrag_Chattie_Codex_Unbenutzte_Definition.txt): unbenutzte
+            flaggen-/bannerartige Definition finden, Textur + UV-Layout liefern (D:\FH2_Flaggen\out\v6\)
+        [ ] ALTERNATIVE (praktikabel): FH2-Flaggenmodell behalten (gleiche Federform),
+            nur die TEXTUR einer Farbvariante (Def 121-124 = Modell 395/397/399/393) durch ein
+            DRIFTZONE-Design ersetzen (Textur wird ueber losen Pfad geladen). Dazu:
+            - Chattie: alle FH2-Flaggentexturen (navy/orange/pink/0x7C7C7E2F/0x43DEEED3 +
+              Variante von Modell 393) als PNG dekodieren, UV-Layout der Modelle 393/395/397/399
+              zeigen (wo liegt das Tuch?), Alpha der FH2-Originale pruefen
+            - DRIFTZONE-Design ins FH2-Layout malen (Tuerkis-Verlauf, Schrift, Logo), mit
+              Chatties Pipeline (BC7, Durango-Tiling 14) encoden, unter dem Pfad der ersetzten
+              Farbe ablegen
+            - Phil: im Spiel F7/F8 (PropTest) alle 4 Flaggen ansehen, welche Farbe/Variante im
+              Spiel am seltensten vorkommt (Festival-Flaggen ueberall pruefen)
+            - Nachteil: ersetzt auch alle Festival-Flaggen dieser Variante auf Phils Rechner
+        [ ] Claude/Chattie: FUN_140377120 und die Manager-/Resource-Schnittstelle verfolgen
+            (wie wird aus der Modell-ID ein geladenes Modell?)
+        [ ] Test EO-Override mit loser Ressource: z. B. Test-Mod mit ersetzter Textur
+            (zeigt, ob .swatchbin ueberschrieben wird; Achtung aendert Flaggen dieser Farbe)
+        [ ] Idee B: eigene Definition = Kopie von 121 mit anderer Modell-ID (def+0xA8) - nur
+            moeglich, wenn die neue Modell-ID als Ressource ladbar ist (offen)
+        [ ] Test: eine einzelne Flagge am Starttor mit neuem Modell
+[ ] Verkehr/KI in Driftzonen ausblenden
+[ ] Ladebildschirm-Zaehler: Drift- und Speedzonen werden zusammengezaehlt
+[ ] Release-Zip 0.9.9 einmal sauber im Spiel testen
+
+-------------------------------------------------
+3. AUFRAEUMEN BEI PHIL (Mod-Ordner)
+-------------------------------------------------
+[ ] Test-DLLs aus mods\Driftzonen\plugins loeschen: PropTest, TorMarker, DriftRec,
+    RadProbe, FlaggeTest, Spawn, RouteFix (verhindert PB-Speichern!), NavDump usw.
+    Nur die fuenf Release-DLLs behalten.
+[ ] Alte Logs im Spielordner loeschen
+[ ] mods\Drift Diag samt Zeile in der Loadorder entfernen
+
+-------------------------------------------------
+4. BEKANNT / BEWUSST SO
+-------------------------------------------------
+- Zonen 2, 3, 7 etwas kuerzer: das Spiel routet immer die kuerzeste Strecke zwischen
+  Start und Ziel, deshalb wurden die Schleifen gekuerzt.
+- Routenlinie auf der Karte kommt vom Spiel, wirkt teils eckig.
+
+-------------------------------------------------
+5. DATEN VON CHATTIE / CODEX (auf Phils PC)
+-------------------------------------------------
+D:\FH2_Flaggen\out\   FH2 Teardrop-Modelle, Strassenbreiten, Strassenraender
+                      (anthem_road_widths_*.csv, anthem_driftzone_road_edges*.csv)
+D:\FH3_Flaggen\out\   FH3 Drift_Zone Modelbin 945-951, Material, Texturen
+D:\FH3_Flaggen\driftzonen_strecken_punkte.csv   256 Streckenpunkte alle 30 m
+
+-------------------------------------------------
+6. WIDESCREEN-MOD
+-------------------------------------------------
+Noch kein Stand in dieser Datei. Phil liefert Notizen / Ordnerpfad nach,
+dann bekommt der Mod hier einen eigenen Abschnitt.

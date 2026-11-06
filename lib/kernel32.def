@@ -1,0 +1,9 @@
+LIBRARY kernel32.dll
+EXPORTS
+VirtualQuery
+CreateFileA
+WriteFile
+CloseHandle
+SetFilePointer
+GetTickCount64
+GetModuleHandleA
