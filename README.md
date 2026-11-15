@@ -1,7 +1,7 @@
 # Forza Horizon 2 – Drift Zones
 
 <div align="center">
-  <img src="Header.png" alt="Forza Horizon 2 – Drift Zones" width="100%">
+  <img src="Header2.png" alt="Forza Horizon 2 – Drift Zones" width="100%">
   <p><strong>Custom Drift Zones for Forza Horizon 2 on PC</strong></p>
 
   <a href="https://github.com/Philipp55112/fh2-drift-zones/releases">
